@@ -12,7 +12,8 @@ const Routes = ({quizStatus}) => {
             <Switch>
                 <Route exact path="/">
                     {
-                        quizStatus === QUIZ_STATUSES.NOT_STARTED ? <Menu /> : (quizStatus === QUIZ_STATUSES.STARTED ? <Quiz /> : <Result />)
+                        quizStatus === QUIZ_STATUSES.NOT_STARTED ? <Menu/> : (quizStatus === QUIZ_STATUSES.STARTED ?
+                            <Quiz/> : <Result/>)
                     }
                 </Route>
             </Switch>
