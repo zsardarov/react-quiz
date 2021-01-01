@@ -2,14 +2,16 @@ import React from "react";
 import Axios from "axios";
 import {connect} from "react-redux";
 import {storeCategories, storeQuestions, startQuiz} from "../redux/actions";
+import Spinner from "./Spinner";
 
 const Menu = ({categories, storeCategories, storeQuestions, startQuiz}) => {
+    const [isLoading, setIsLoading] = React.useState(true);
+
     React.useEffect( () => {
         const fetchCategories = async () => {
-            const result = await Axios(
-                'https://opentdb.com/api_category.php',
-            );
+            const result = await Axios('https://opentdb.com/api_category.php');
             storeCategories(result.data.trivia_categories);
+            setIsLoading(false);
         };
         if (categories.length === 0) {
             fetchCategories();
@@ -35,7 +37,10 @@ const Menu = ({categories, storeCategories, storeQuestions, startQuiz}) => {
         <>
             <h1 className="text-center mb-4">Quiz App</h1>
             <div className="row">
-                <div className="offset-md-4 col-md-4">
+                <div className="offset-md-4 col-md-4 position-relative">
+                    {isLoading &&
+                        <Spinner />
+                    }
                     <form onSubmit={onMenuSubmit}>
                         <div className="form-group">
                             <label htmlFor="category">Category</label>
